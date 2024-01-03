@@ -7,7 +7,9 @@ import Config as config
 def price_guangdong():
     current_datetime = datetime.now()
     to_day = current_datetime.strftime("%Y-%m-%d")
-    excel_column_name = current_datetime.strftime("%y年%m月%d日")
+    # excel_column_name = current_datetime.strftime('%y-%m-%d')
+    excel_column_name =f"{current_datetime.year}年{current_datetime.month:02d}月{current_datetime.day:02d}日"
+
     url = config.demo_url
     params = {
         "dayReal": "01",

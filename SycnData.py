@@ -9,4 +9,4 @@ password = "111111"
 login_with_captcha(username, password)
 
 # 日前溪右送出侧电量和价格广东
-price_guangdong()
+# price_guangdong()

@@ -1,5 +1,5 @@
 # 全局唯一，cookie
-cookie = "444444444444"
+cookie = "aaa"
 
 # 日前溪右送出侧电量和价格广东 url
 demo_url = "http://stg1-iops.daikuan.qihoo.net/iops/weComManage/getOnUseTemplate"

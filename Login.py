@@ -9,21 +9,23 @@ from io import BytesIO
 import matplotlib.pyplot as plt
 import importlib
 import Config as config
-
+from OcrReadImg import recognize_captcha
 
 # 验证码
 def base64_to_image(base64_string):
     # 解码 base64 字符串
-    image_data = base64.b64decode(base64_string)
+    # image_data = base64.b64decode(base64_string)
+    result = recognize_captcha(base64_string)
     # 使用 BytesIO 将字节流转换为文件对象
-    image_file = BytesIO(image_data)
+    # image_file = BytesIO(image_data)
     # 使用 Pillow 打开图像文件对象
-    image = Image.open(image_file)
-    plt.figure(figsize=(2, 2))
+    # image = Image.open(image_file)
+    # plt.figure(figsize=(2, 2))
     # 显示图像
-    plt.imshow(image)
-    plt.show(block=False)
-    plt.pause(5)
+    # plt.imshow(image)
+    # plt.show(block=False)
+    # plt.pause(2)
+    return result
 
 
 # 更新cookie
@@ -51,9 +53,10 @@ def login_with_captcha(username, password):
     image64 = captcha_response.json()["data"]["imageBytes"]
     token = captcha_response.json()["data"]["token"]
     # 展示验证码
-    base64_to_image(image64)
+    # base64_to_image(image64)
     # 手动输入验证码
-    captcha_input = input("请输入验证码：")
+    # captcha_input = input("请输入验证码：")
+    captcha_input = base64_to_image(image64)
     # 构造登录请求的数据，包括用户名、密码和验证码
     data = {"currentLogin": "account", "username": username, "password": password, "captcha": captcha_input,
             "token": token, "bagClass": 1}
