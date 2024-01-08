@@ -8,7 +8,8 @@ def price_guangdong():
     current_datetime = datetime.now()
     to_day = current_datetime.strftime("%Y-%m-%d")
     # excel_column_name = current_datetime.strftime('%y-%m-%d')
-    excel_column_name =f"{current_datetime.year}年{current_datetime.month:02d}月{current_datetime.day:02d}日"
+    # excel_column_name =f"{current_datetime.year}年{current_datetime.month:02d}月{current_datetime.day:02d}日"
+    excel_column_name = '23年12月28日'
 
     url = config.demo_url
     params = {
@@ -20,7 +21,8 @@ def price_guangdong():
     }
 
     header = {"Cookie": config.cookie}
-    json_data = post(url, params, header)
+    # json_data = post(url, params, header)
+    json_data = {}
     print(json_data)
 
     # excel列与数据的映射关系
@@ -37,18 +39,22 @@ def price_guangdong():
 
     # 获取所有列名
     #columns_name = [col[0].value for col in ws.iter_cols(min_row=1, max_col=ws.max_column)]
+    row_number = ws.max_row
+    cell_value = ws.cell(row=row_number, column=1).value
+    if excel_column_name == cell_value:
+        return
 
     data_map = {item["time"]: item for item in json_data["data"]}
 
     # 行标
-    row_number = ws.max_row + 1
+    write_number = ws.max_row + 1
     # 先写第一列
     ws.cell(row=row_number, column=1, value=excel_column_name)
     # 遍历map，插入新数据
     for key, value in position_map.items():
         data_index = value.split("@")
         item = data_map.get(data_index[0])
-        ws.cell(row=row_number, column=key, value=float(item[data_index[1]]))
+        ws.cell(row=write_number, column=key, value=float(item[data_index[1]]))
 
     # 保存
     wb.save(excel_path)
